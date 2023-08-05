@@ -1,0 +1,14 @@
+* setup dependencies
+* support Waveshare e-paper on circuitpython
+upload this to its own git repo when rdy
+
+** most recent version of upstream waveshare code
+- downloading waveshare's TAR ball will be part of our build process
+- make it easy to pull upstream changes
+** Pico W microcontroller
+*** create wrapper that mimics MicroPython SPI
+does this already exist?
+** Raspberry Pi
+*** create wrapper that mimics MicroPython SPI
+** other Linux?
+- have an easy way to integrate with the SPI API...
