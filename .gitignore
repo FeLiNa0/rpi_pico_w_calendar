@@ -2,6 +2,7 @@ prev/
 *.uf2
 settings.toml
 src/upstream/*
+deps/
 
 
 # Byte-compiled / optimized / DLL files

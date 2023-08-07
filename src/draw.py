@@ -9,7 +9,7 @@ def draw():
     epd = EPD_2in66()
     image = adafruit_framebuf.FrameBuffer(epd.buffer_Landscape, epd.height, epd.width, PIXEL_FORMAT)
     image.fill(0x00)
-    image.text("RPi Pico Zero", 0, 40, 0xFF)
+    image.text("RPi Pico Zero", 0, 40, 0xFF, font_name='./assets/font5x8.bin')
     
     time.sleep(1)
     epd.init(0)

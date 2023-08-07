@@ -27,12 +27,18 @@ wait-for-bootloader:
 	while [ ! -d $(BOOTLOADER) ] ; do sleep 1 ; done
 
 cp:
-	cp -r src/* $(DEST)/
+	cp code.py $(DEST)/
+	cp -r src $(DEST)/
+	cp -r assets $(DEST)/
+	cp -r settings.toml $(DEST)/settings.toml
+	cp -r micropython_compat/* $(DEST)/
 
 diff:
 	diff ${DEST}/settings.toml settings.toml
-	diff -r ${DEST}/ src/ \
-	  --exclude='.*' --exclude=settings.toml --exclude=boot_out.txt --exclude=lib
+	diff -r ${DEST}/src src/
+	diff -r ${DEST}/assets assets/
+	diff -r ${DEST} micropython_compat/ \
+	  --exclude='.*' --exclude=settings.toml --exclude=boot_out.txt --exclude=lib --exclude=src
 	echo "No changes"
 
 dev:
