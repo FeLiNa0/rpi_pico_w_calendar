@@ -3,6 +3,8 @@ import ipaddress
 import wifi
 import socketpool
 
+from draw import draw
+
 print("Connecting to WiFi")
 
 #  connect to your SSID
@@ -23,3 +25,4 @@ print("My IP address is", wifi.radio.ipv4_address)
 ipv4 = ipaddress.ip_address("8.8.4.4")
 print("Ping google.com: %f ms" % (wifi.radio.ping(ipv4)*1000))
 
+draw()

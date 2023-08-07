@@ -19,7 +19,8 @@ flash-circuitpython: clean $(BOOTLOADER)
 	cp $(C) $(BOOTLOADER)
 
 install-libraries:
-	pipkin --mount $(DEST) install --compile -r requirements.txt
+	# --compile 
+	pipkin --mount $(DEST) install -r requirements.txt
 
 wait-for-dest:
 	@echo Will loop until $(DEST) is mounted
