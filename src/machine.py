@@ -56,10 +56,10 @@ class Pin:
             self.pin.pull = pull
 
     def __call__(self, new_value):
-        self.pin = new_value
+        self.pin.value = new_value
 
     def value(self) -> None:
-        return self.pin
+        return self.pin.value
 
 
 class SPI:

@@ -1,22 +1,18 @@
 SERIAL_DEVICE=/dev/ttyACM0
 ADAFRUIT_CIRCUITPY_VERSION := 8.2.2
-C := ./dependencies/adafruit-circuitpython-pico_w-en_US-$(ADAFRUIT_CIRCUITPY_VERSION).uf2
+UF2_FILE := ./deps/uf2/adafruit-circuitpython-pico_w-en_US-$(ADAFRUIT_CIRCUITPY_VERSION).uf2
 
 BASE_DEST:=/run/media/$(shell whoami)
 BOOTLOADER=${BASE_DEST}/RPI-RP2
 DEST:=${BASE_DEST}/CIRCUITPY
 
-$(BOOTLOADER):
-	@test ! -d $(BOOTLOADER) \
-		&& echo "If this directory does not exist:" \
-		&& echo "unplug your Pico W and then press the BOOTSEL button and plug it back in" \
-		&& exit 1
+get-upstream:
+	git clone git@github.com:waveshareteam/Pico_ePaper_Code.git ./deps/Pico_ePaper_Code
 
-flash-circuitpython: clean $(BOOTLOADER)
-	mkdir -p ./dependencies
-	wget -O $(C) \
+flash-circuitpython: clean wait-for-bootloader
+	wget -O $(UF2_FILE) \
 		https://downloads.circuitpython.org/bin/raspberry_pi_pico_w/en_US/adafruit-circuitpython-raspberry_pi_pico_w-en_US-$(ADAFRUIT_CIRCUITPY_VERSION).uf2
-	cp $(C) $(BOOTLOADER)
+	cp $(UF2_FILE) $(BOOTLOADER)
 
 install-libraries:
 	# --compile 
@@ -25,6 +21,10 @@ install-libraries:
 wait-for-dest:
 	@echo Will loop until $(DEST) is mounted
 	while [ ! -d $(DEST) ] ; do sleep 1 ; done
+
+wait-for-bootloader:
+	@echo Will loop until $(BOOTLOADER) is mounted
+	while [ ! -d $(BOOTLOADER) ] ; do sleep 1 ; done
 
 cp:
 	cp -r src/* $(DEST)/
@@ -47,4 +47,4 @@ open-serial-console:
 	screen ${SERIAL_DEVICE} 115200
 
 clean:
-	rm -rf ./dependencies
+	rm -rf ./deps/uf2

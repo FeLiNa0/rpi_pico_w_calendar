@@ -3,7 +3,7 @@ import time
 import adafruit_framebuf
 from upstream.pico_epd_2in66 import EPD_2in66
 
-PIXEL_FORMAT = adafruit_framebuf.MHMSB
+PIXEL_FORMAT = adafruit_framebuf.MVLSB
 
 def draw():
     epd = EPD_2in66()
