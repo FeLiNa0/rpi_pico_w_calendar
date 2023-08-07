@@ -1,8 +1,10 @@
 prev/
 *.uf2
-settings.toml
 src/upstream/*
 deps/
+
+# This file might contain secrets, do not commit to git
+settings.toml
 
 
 # Byte-compiled / optimized / DLL files

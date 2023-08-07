@@ -1,7 +1,7 @@
 import time
 
 import adafruit_framebuf
-from upstream.pico_epd_2in66 import EPD_2in66
+from Pico_ePaper_2in66 import EPD_2in66
 
 PIXEL_FORMAT = adafruit_framebuf.MVLSB
 
@@ -10,6 +10,7 @@ def draw():
     image = adafruit_framebuf.FrameBuffer(epd.buffer_Landscape, epd.height, epd.width, PIXEL_FORMAT)
     image.fill(0x00)
     image.text("RPi Pico Zero", 0, 40, 0xFF, font_name='./assets/font5x8.bin')
+    image.text("FeLiNa FOREVER", 10, 40, 0xFF, font_name='./assets/font5x8.bin')
     
     time.sleep(1)
     epd.init(0)
