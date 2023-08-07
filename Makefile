@@ -6,7 +6,8 @@ BASE_DEST:=/run/media/$(shell whoami)
 BOOTLOADER=${BASE_DEST}/RPI-RP2
 DEST:=${BASE_DEST}/CIRCUITPY
 
-get-upstream:
+get-deps:
+	git clone git@github.com:FeLiNa0/adafruit_micropython_compat.git ./deps/adafruit_micropython_compat
 	git clone git@github.com:waveshareteam/Pico_ePaper_Code.git ./deps/Pico_ePaper_Code
 
 flash-circuitpython: clean wait-for-bootloader
@@ -17,6 +18,7 @@ flash-circuitpython: clean wait-for-bootloader
 install-libraries:
 	# --compile 
 	pipkin --mount $(DEST) install -r requirements.txt
+	cp -r deps/adafruit_micropython_compat/* $(DEST)/
 
 wait-for-dest:
 	@echo Will loop until $(DEST) is mounted
@@ -27,18 +29,15 @@ wait-for-bootloader:
 	while [ ! -d $(BOOTLOADER) ] ; do sleep 1 ; done
 
 cp:
-	cp code.py $(DEST)/
+	cp settings.toml code.py $(DEST)/
 	cp -r src $(DEST)/
 	cp -r assets $(DEST)/
-	cp -r settings.toml $(DEST)/settings.toml
-	cp -r micropython_compat/* $(DEST)/
 
 diff:
+	diff ${DEST}/code.py code.py
 	diff ${DEST}/settings.toml settings.toml
 	diff -r ${DEST}/src src/
 	diff -r ${DEST}/assets assets/
-	diff -r ${DEST} micropython_compat/ \
-	  --exclude='.*' --exclude=settings.toml --exclude=boot_out.txt --exclude=lib --exclude=src
 	echo "No changes"
 
 dev:
