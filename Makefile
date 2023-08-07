@@ -12,7 +12,7 @@ get-deps:
 	git clone git@github.com:FeLiNa0/adafruit_micropython_compat.git ./deps/adafruit_micropython_compat
 	git clone git@github.com:waveshareteam/Pico_ePaper_Code.git ./deps/Pico_ePaper_Code
 
-flash-circuitpython: clean wait-for-bootloader
+flash-circuitpython: clean prep-to-flash wait-for-bootloader
 	mkdir -p $(UF2_DIR)
 	wget -O $(UF2_FILE) \
 		https://downloads.circuitpython.org/bin/raspberry_pi_pico_w/en_US/adafruit-circuitpython-raspberry_pi_pico_w-en_US-$(ADAFRUIT_CIRCUITPY_VERSION).uf2
@@ -55,8 +55,11 @@ open-serial-console:
 	@echo Try running this as root user or with sudo
 	screen ${SERIAL_DEVICE} 115200
 
-reset-rpi-pico-2: clean wait-for-bootloader
+prep-to-flash:
+	@echo While holding the BOOTSEL button on the Pico, plug in the USB cable to your computer.
 	mkdir -p $(UF2_DIR)
+
+reset-rpi-pico-2: clean prep-to-flash wait-for-bootloader
 	wget -O $(RESET_UF2_FILE) https://datasheets.raspberrypi.com/soft/flash_nuke.uf2
 	cp $(RESET_UF2_FILE) $(BOOTLOADER)
 
